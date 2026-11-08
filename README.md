@@ -2,13 +2,15 @@
 
 一个零依赖、可离线打开的交互式杨氏双缝虚拟实验。它把同一组夫琅禾费公式连续映射到屏幕条纹、实时读数、实验记录和单光子探测点上，而不是分别做几段互不相干的动画。
 
+**在线体验：[https://tuantuan1020.github.io/double-slit-optical-bench/](https://tuantuan1020.github.io/double-slit-optical-bench/)**  ·  **源码：[GitHub](https://github.com/TuanTuan1020/double-slit-optical-bench)**
+
 ![实验台：默认氦氖激光图样](preview-desktop.png)
 
 ![单光子累积：10,000 个探测点](preview-photon.png)
 
 ## 快速开始
 
-直接双击 `index.html` 即可。若浏览器对本地文件有限制，可在项目目录运行：
+在线版直接打开上面的 GitHub Pages 链接。若要在本地运行，直接双击 `index.html` 即可；若浏览器对本地文件有限制，可在项目目录运行：
 
 ```bash
 python3 -m http.server 4173
