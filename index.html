@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dce1dc">
+  <meta name="description" content="可交互的杨氏双缝干涉虚拟实验：夫琅禾费远场、单缝包络、缺级、白光色散与单光子累积。">
+  <title>双缝干涉实验 · 虚拟光学台</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101715'/%3E%3Cpath d='M10 6v20M22 6v20' stroke='%23f2f4ef' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-slits" viewBox="0 0 24 24">
+      <path d="M8 3.5v17M16 3.5v17"/>
+      <path d="M4.5 12h2M17.5 12h2"/>
+    </symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24">
+      <path d="M4 10a8 8 0 1 1 2.3 6.1"/>
+      <path d="M4 4v6h6"/>
+    </symbol>
+    <symbol id="i-record" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="7.5"/>
+      <circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24">
+      <path d="M12 4v10"/>
+      <path d="m8 10 4 4 4-4"/>
+      <path d="M5 18.5h14"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M5 7h14M9 7V4.5h6V7M7.5 7l.8 12h7.4l.8-12"/>
+      <path d="M10.5 10.5v5M13.5 10.5v5"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24">
+      <path d="M8 5.5v13l10-6.5z" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24">
+      <path d="M8.5 5v14M15.5 5v14"/>
+    </symbol>
+    <symbol id="i-fast" viewBox="0 0 24 24">
+      <path d="m4 6 7 6-7 6zM12 6l7 6-7 6z" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-info" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M12 10.5V17M12 7.5v.2"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h13M13 7l5 5-5 5"/>
+    </symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 30 30"><path d="M9 4v22M21 4v22"/><path d="M3 15h5M22 15h5"/></svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-title">双缝干涉实验</span>
+          <span class="brand-sub">杨氏双缝 · 夫琅禾费远场</span>
+        </span>
+      </a>
+
+      <div class="header-status" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="headerStatus">相干单色光 · 632.8 nm</span>
+      </div>
+
+      <div class="header-actions">
+        <span class="farfield-badge" id="farfieldBadge">远场成立</span>
+        <button class="btn btn-ghost btn-icon-text" id="resetBtn" type="button" aria-label="重置">
+          <svg class="icon" aria-hidden="true"><use href="#i-reset"/></svg>
+          <span>重置</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="intro" aria-labelledby="pageTitle">
+      <div class="intro-copy">
+        <p class="kicker">虚拟光学实验 · DS-02</p>
+        <h1 id="pageTitle">双缝之间，<br><span>光与自己相遇</span></h1>
+      </div>
+      <div class="intro-side">
+        <p class="intro-lede">一束相干光穿过两条狭缝，在屏上留下明暗相间的证据。调节波长、缝距与屏距，观察单缝包络、整数缺级和单光子累积。</p>
+        <dl class="intro-meta">
+          <div><dt>模型</dt><dd>标量衍射 · 夫琅禾费近似</dd></div>
+          <div><dt>参数</dt><dd>400–680 nm · 0.04–0.15 mm</dd></div>
+          <div><dt>判据</dt><dd>N<sub>F</sub> ≤ 0.09</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <div class="lab-grid">
+      <aside class="panel controls" aria-labelledby="controlsTitle">
+        <div class="panel-head">
+          <h2 id="controlsTitle">光源与几何</h2>
+          <div class="panel-head-tools">
+            <span class="panel-note">实时计算</span>
+            <button class="btn btn-ghost btn-small" id="resetBtn2" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-reset"/></svg>
+              <span>恢复标准</span>
+            </button>
+          </div>
+        </div>
+
+        <section class="control-group" id="lightGroup" aria-labelledby="lightGroupTitle">
+          <div class="group-head">
+            <h3 id="lightGroupTitle">光源</h3>
+            <div class="segmented" role="group" aria-label="光源类型">
+              <button type="button" data-light="mono" aria-pressed="true">单色光</button>
+              <button type="button" data-light="white" aria-pressed="false">白光</button>
+            </div>
+          </div>
+
+          <div class="control" id="lambdaControl">
+            <div class="control-head">
+              <label for="lambda">波长 λ</label>
+              <output id="outLambda" for="lambda">632.8 nm</output>
+            </div>
+            <div class="slider-row">
+              <span class="swatch" id="lambdaSwatch" aria-hidden="true"></span>
+              <input type="range" id="lambda" min="400" max="680" step="0.1" value="632.8" aria-describedby="lambdaHelp">
+            </div>
+            <div class="ticks" aria-hidden="true"><span>400</span><span>540</span><span>680 nm</span></div>
+            <p class="help" id="lambdaHelp">单色光模式下可调；白光模式使用 380–780 nm 连续谱。</p>
+          </div>
+        </section>
+
+        <section class="control-group" id="slitGroup" aria-labelledby="slitGroupTitle">
+          <div class="group-head">
+            <h3 id="slitGroupTitle">双缝</h3>
+            <span class="group-note">保持 a &lt; d</span>
+          </div>
+
+          <div class="control">
+            <div class="control-head">
+              <label for="slitDistance">缝距 d</label>
+              <output id="outD" for="slitDistance">0.120 mm</output>
+            </div>
+            <input type="range" id="slitDistance" min="0.04" max="0.15" step="0.001" value="0.12">
+            <div class="ticks" aria-hidden="true"><span>0.04</span><span>0.095</span><span>0.15 mm</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-head">
+              <label for="slitWidth">缝宽 a</label>
+              <output id="outA" for="slitWidth">0.030 mm</output>
+            </div>
+            <input type="range" id="slitWidth" min="0.01" max="0.05" step="0.001" value="0.03">
+            <div class="ticks" id="aTicks" aria-hidden="true"><span>0.01</span><span>0.030</span><span>0.05 mm</span></div>
+          </div>
+        </section>
+
+        <section class="control-group" id="screenGroup" aria-labelledby="screenGroupTitle">
+          <div class="group-head">
+            <h3 id="screenGroupTitle">观察屏</h3>
+            <span class="group-note">远场</span>
+          </div>
+
+          <div class="control">
+            <div class="control-head">
+              <label for="screenDistance">屏距 L</label>
+              <output id="outL" for="screenDistance">2.00 m</output>
+            </div>
+            <input type="range" id="screenDistance" min="1.2" max="4" step="0.01" value="2">
+            <div class="ticks" aria-hidden="true"><span>1.2</span><span>2.6</span><span>4.0 m</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-head">
+              <label for="screenWidth">视场宽度</label>
+              <output id="outWidth" for="screenWidth">100 mm</output>
+            </div>
+            <input type="range" id="screenWidth" min="20" max="120" step="1" value="100">
+            <div class="ticks" aria-hidden="true"><span>20</span><span>70</span><span>120 mm</span></div>
+          </div>
+        </section>
+
+      </aside>
+
+      <section class="stage panel" aria-labelledby="stageTitle">
+        <div class="stage-head">
+          <div>
+            <h2 id="stageTitle">观察屏</h2>
+            <p class="stage-sub">拖动青色探测线，读取屏上任意位置</p>
+          </div>
+          <div class="stage-tools">
+            <div class="segmented" role="group" aria-label="探测方式">
+              <button type="button" data-detection="continuous" aria-pressed="true">连续光</button>
+              <button type="button" data-detection="photon" aria-pressed="false">单光子</button>
+            </div>
+            <label class="select-wrap">
+              <span class="sr-only">实验预设</span>
+              <select id="presetSelect">
+                <option value="">预设</option>
+                <option value="hene">氦氖 632.8 nm</option>
+                <option value="green">绿光 532 nm</option>
+                <option value="missing">缺级演示</option>
+                <option value="dense">密条纹</option>
+              </select>
+            </label>
+            <label class="check" id="envelopeToggle">
+              <input type="checkbox" id="showEnvelope" checked>
+              <span>显示包络</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="screen-frame">
+          <canvas id="screenCanvas" tabindex="0" aria-label="双缝干涉观察屏。拖动探测线或使用左右方向键移动探测位置。" aria-describedby="screenHelp screenDescription"></canvas>
+          <p class="sr-only" id="screenHelp">观察屏上半部分显示明暗条纹，下半部分显示相对强度曲线。实线为强度，虚线为包络；青色竖线是探测位置。</p>
+          <p class="sr-only" id="screenDescription"></p>
+        </div>
+
+        <div class="photon-bar" id="photonBar" hidden>
+          <div class="photon-count">
+            <span class="photon-dot" aria-hidden="true"></span>
+            <strong id="photonCount">0</strong>
+            <span>个光子</span>
+          </div>
+          <div class="photon-actions">
+            <button type="button" class="btn btn-small" id="emitOne">
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+              <span>发射 1 个</span>
+            </button>
+            <button type="button" class="btn btn-small btn-primary" id="autoEmit" aria-pressed="false">
+              <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+              <span>自动累积</span>
+            </button>
+            <button type="button" class="btn btn-small" id="emitMany">
+              <svg class="icon" aria-hidden="true"><use href="#i-fast"/></svg>
+              <span>快进 1 万</span>
+            </button>
+            <button type="button" class="btn btn-small btn-ghost" id="clearPhotons">
+              <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
+              <span>清空</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="probe-strip">
+          <div class="probe-cell">
+            <span class="probe-label">位置 y</span>
+            <span class="probe-value" id="probeY">0.00 <small>mm</small></span>
+          </div>
+          <div class="probe-cell">
+            <span class="probe-label">sin θ</span>
+            <span class="probe-value" id="probeSin">0.0000</span>
+          </div>
+          <div class="probe-cell">
+            <span class="probe-label">光程差 Δ</span>
+            <span class="probe-value" id="probeDelta">0.0 <small>nm</small></span>
+          </div>
+          <div class="probe-cell">
+            <span class="probe-label">Δ / λ</span>
+            <span class="probe-value" id="probeOrder">0.000</span>
+          </div>
+          <div class="probe-cell">
+            <span class="probe-label">包络</span>
+            <span class="probe-value" id="probeEnv">1.000</span>
+          </div>
+          <div class="probe-cell">
+            <span class="probe-label">相对强度</span>
+            <span class="probe-value" id="probeIntensity">1.000</span>
+          </div>
+        </div>
+
+        <p class="status-line" id="statusLine" role="status" aria-live="polite"></p>
+      </section>
+
+      <aside class="panel readouts" aria-labelledby="readoutsTitle">
+        <div class="panel-head">
+          <h2 id="readoutsTitle">实时读数</h2>
+          <span class="panel-note" id="readoutMode">单色光</span>
+        </div>
+
+        <div class="hero-metric">
+          <span class="metric-label">相邻明纹间距</span>
+          <div class="metric-value" id="metricValue"><span id="metricSpacing">10.55</span><small>mm</small></div>
+          <p class="metric-note" id="metricNote">小角近似 Δy ≈ λL/d</p>
+        </div>
+
+        <dl class="metric-list">
+          <div><dt>一级干涉极大</dt><dd><span id="metricFirst">10.55</span> <span id="firstUnit">mm</span></dd></div>
+          <div><dt>中央包络半宽</dt><dd><span id="metricEnvelope">42.20</span> <span id="envelopeUnit">mm</span></dd></div>
+          <div><dt>屏内可见级次</dt><dd id="metricOrders">±3（缺 ±4）</dd></div>
+          <div><dt>缝距 / 缝宽</dt><dd><span id="metricRatio">4.00</span> ×</dd></div>
+          <div><dt>远场判据 N<sub>F</sub></dt><dd><span id="metricNF">0.018</span> <span class="ok-dot" aria-hidden="true"></span></dd></div>
+        </dl>
+
+        <section class="formula-card" aria-labelledby="formulaTitle">
+          <div class="formula-head">
+            <h3 id="formulaTitle">探测点公式</h3>
+            <span class="order-badge" id="probeOrderBadge">m = 0.00</span>
+          </div>
+          <div id="monoFormula">
+            <p class="formula">I/I<sub>0</sub> = sinc<sup>2</sup>(β) · cos<sup>2</sup>(α)</p>
+            <p class="formula-sub">β = πa sinθ / λ = <span id="betaValue">0.000</span></p>
+            <p class="formula-sub">α = πd sinθ / λ = <span id="alphaValue">0.000</span></p>
+            <p class="formula-sub">Δ = d sinθ = <span id="deltaValue">0.0</span> nm</p>
+
+            <div class="factor-bars">
+              <div class="factor-row"><span>单缝包络 sinc²β</span><span id="factorEnv">1.000</span></div>
+              <div class="bar"><i id="barEnv" style="width:100%"></i></div>
+              <div class="factor-row"><span>双缝干涉 cos²α</span><span id="factorInt">1.000</span></div>
+              <div class="bar"><i id="barInt" style="width:100%"></i></div>
+            </div>
+          </div>
+          <div id="whiteFormula" hidden>
+            <p class="formula">I(θ) = ∫ S(λ) I(θ;λ) dλ</p>
+            <p class="formula-sub">白光由 380–780 nm 连续谱组成；各波长独立干涉，强度相加。</p>
+            <p class="formula-sub">中央零级重合为白色；高级次因 λL/d 不同而展开为彩色。</p>
+          </div>
+        </section>
+
+        <section class="conclusion-card" aria-labelledby="conclusionTitle">
+          <h3 id="conclusionTitle">当前结论</h3>
+          <p id="conclusion">中央明纹最强，向两侧按单缝包络衰减；当 d/a 为整数时，整数倍级次与包络零点重合，形成缺级。</p>
+        </section>
+      </aside>
+    </div>
+
+    <section class="records panel" aria-labelledby="recordsTitle">
+      <div class="panel-head records-head">
+        <div>
+          <h2 id="recordsTitle">实验记录</h2>
+          <p class="panel-sub">把当前参数与理论读数存入本机，可导出 CSV。</p>
+        </div>
+        <div class="record-actions">
+          <button type="button" class="btn btn-primary" id="recordBtn">
+            <svg class="icon" aria-hidden="true"><use href="#i-record"/></svg>
+            <span>记录当前</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="exportRecords">
+            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+            <span>导出记录 CSV</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="exportCurve">
+            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+            <span>导出强度曲线</span>
+          </button>
+          <button type="button" class="btn btn-ghost" id="clearRecords">清空</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="recordsTable">
+          <caption class="sr-only">已记录的双缝干涉实验参数与理论读数</caption>
+          <thead>
+            <tr>
+              <th scope="col">时间</th>
+              <th scope="col">光源</th>
+              <th scope="col">λ</th>
+              <th scope="col">d</th>
+              <th scope="col">a</th>
+              <th scope="col">L</th>
+              <th scope="col">Δy</th>
+              <th scope="col">包络半宽</th>
+              <th scope="col">可见级次</th>
+              <th scope="col"><span class="sr-only">操作</span></th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody"></tbody>
+        </table>
+        <p class="empty-state" id="recordsEmpty">还没有记录。调整参数后点击“记录当前”。</p>
+      </div>
+    </section>
+
+    <section class="manual" aria-labelledby="manualTitle">
+      <div class="manual-head">
+        <p class="kicker">实验手册</p>
+        <h2 id="manualTitle">从条纹到光子，模型如何成立</h2>
+        <p class="manual-lede">这台虚拟光学台只做一件事：把同一组夫琅禾费公式，连续地映射到屏幕、读数和光子探测点上。下面的假设、步骤与边界，决定了这些数字何时可信。</p>
+      </div>
+
+      <div class="manual-grid">
+        <article class="manual-col" aria-labelledby="modelTitle">
+          <h3 id="modelTitle">物理模型</h3>
+          <p>波长为 λ 的相干平面波垂直照明两条等宽、等强、相距 d 的狭缝。远场屏幕上，双缝干涉因子与单缝衍射包络相乘：</p>
+          <div class="equation">
+            <span>I(θ)</span>
+            <span class="eq-line">I<sub>0</sub></span>
+            <span>= sinc<sup>2</sup>(β) · cos<sup>2</sup>(α)</span>
+          </div>
+          <p class="eq-def">β = πa sinθ / λ，α = πd sinθ / λ。</p>
+
+        <figure class="schematic manual-schematic">
+            <svg id="benchSvg" viewBox="0 0 300 166" role="img" aria-labelledby="benchTitle benchDesc">
+              <title id="benchTitle">双缝干涉光路示意</title>
+              <desc id="benchDesc">激光从左方入射，经过两条狭缝后在右方观察屏上形成干涉条纹。</desc>
+              <defs>
+                <clipPath id="benchClip"><rect x="0" y="0" width="300" height="166"/></clipPath>
+                <linearGradient id="screenGlow" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#0a1112"/>
+                  <stop offset="0.5" stop-color="#d9f5ef"/>
+                  <stop offset="1" stop-color="#0a1112"/>
+                </linearGradient>
+              </defs>
+              <g clip-path="url(#benchClip)">
+                <line class="bench-axis" x1="18" y1="84" x2="282" y2="84"/>
+                <path id="beamPath" class="bench-beam" d="M24 84H112"/>
+                <g id="waveGroup" class="bench-waves" aria-hidden="true">
+                  <path d="M132 58a32 32 0 0 1 0 52"/>
+                  <path d="M150 48a48 48 0 0 1 0 72"/>
+                  <path d="M168 38a64 64 0 0 1 0 92"/>
+                  <path d="M132 58a32 32 0 0 0 0 52"/>
+                  <path d="M150 48a48 48 0 0 0 0 72"/>
+                  <path d="M168 38a64 64 0 0 0 0 92"/>
+                </g>
+                <g id="rayGroup" class="bench-rays" aria-hidden="true">
+                  <path id="rayTop" d="M112 76 282 48"/>
+                  <path id="rayBottom" d="M112 92 282 120"/>
+                  <path id="rayTop2" d="M112 92 282 58"/>
+                  <path id="rayBottom2" d="M112 76 282 110"/>
+                </g>
+                <g class="bench-source">
+                  <rect x="12" y="77" width="12" height="14" rx="1.5"/>
+                  <circle cx="18" cy="84" r="2.2"/>
+                </g>
+                <g class="bench-barrier">
+                  <rect x="108" y="16" width="8" height="51" rx="1"/>
+                  <rect id="slitTop" x="108" y="73" width="8" height="6" rx="1"/>
+                  <rect id="slitBottom" x="108" y="89" width="8" height="6" rx="1"/>
+                  <rect x="108" y="101" width="8" height="49" rx="1"/>
+                </g>
+                <g class="bench-screen">
+                  <rect x="278" y="18" width="8" height="132" rx="1"/>
+                  <rect x="280" y="30" width="4" height="108" fill="url(#screenGlow)" opacity=".7"/>
+                </g>
+                <g class="bench-labels">
+                  <text x="18" y="66" text-anchor="middle">激光</text>
+                  <text x="112" y="12" text-anchor="middle">双缝</text>
+                  <text x="282" y="162" text-anchor="middle">观察屏</text>
+                  <text id="labelD" x="104" y="88" text-anchor="end">d</text>
+                  <text id="labelA" x="104" y="70" text-anchor="end">a</text>
+                  <text x="196" y="158" text-anchor="middle">L</text>
+                  <path d="M116 150h160" class="bench-dim"/>
+                  <path d="M116 146v8M276 146v8" class="bench-dim"/>
+                  <path id="dimD" d="M102 76v16" class="bench-dim"/>
+                  <path d="M102 72h-6M102 92h-6" class="bench-dim"/>
+                </g>
+              </g>
+            </svg>
+            <figcaption>光路示意 · 纵向比例放大，读数以参数面板为准</figcaption>
+          </figure>
+
+          <p>屏幕坐标使用精确几何 y = L tanθ、sinθ = y/√(y² + L²)，而不是把 sinθ 直接当作 θ。相邻明纹的小角近似为 Δy ≈ λL/d。</p>
+          <p>当 m·a/d 为整数时，干涉极大与单缝衍射极小重合，出现缺级；例如 d/a 为整数时，m = n(d/a) 级缺级。屏上可见级次由视场边缘的 sinθ 决定。</p>
+          <p class="manual-note">远场判据：N<sub>F</sub> = (d + a)²/(λL) ≪ 1。当前参数范围保证 N<sub>F</sub> ≤ 0.09。</p>
+        </article>
+
+        <article class="manual-col" aria-labelledby="stepsTitle">
+          <h3 id="stepsTitle">实验步骤</h3>
+          <ol class="steps">
+            <li><strong>设定光源。</strong>选择单色光，把波长调到 632.8 nm；或切换到白光，观察中央白色、边缘彩色的图样。</li>
+            <li><strong>设定双缝。</strong>取 d = 0.120 mm、a = 0.030 mm，保持 a &lt; d。注意 d/a = 4 时会出现 ±4 级缺级。</li>
+            <li><strong>设定屏距与视场。</strong>取 L = 2.00 m、视场 100 mm，让中央包络和 ±4 级缺级同时进入屏幕。</li>
+            <li><strong>读取条纹。</strong>拖动青色探测线到中央明纹、第一级明纹和第一级暗纹，记录 y、Δ 与 I/I₀。</li>
+            <li><strong>验证间距。</strong>比较相邻明纹间距与 λL/d；改变 d 或 L，观察条纹如何疏密变化。</li>
+            <li><strong>寻找缺级。</strong>保持 d/a 为整数，观察 ±4 级位置光强接近零；把 a 调离整数比，缺级消失。</li>
+            <li><strong>单光子累积。</strong>切换到单光子，逐个发射或自动累积。少量光子是随机点，计数增加后逐渐显出理论曲线。</li>
+            <li><strong>记录与导出。</strong>点击“记录当前”保存一组参数；用 CSV 导出记录或完整强度曲线。</li>
+          </ol>
+        </article>
+
+        <article class="manual-col" aria-labelledby="limitsTitle">
+          <h3 id="limitsTitle">误差与边界</h3>
+          <ul class="limits">
+            <li><strong>理想相干。</strong>模型假设两缝被同一相干平面波等幅照明。真实激光有有限线宽和光束轮廓，条纹对比度会下降。</li>
+            <li><strong>远场近似。</strong>公式只在 N<sub>F</sub> ≪ 1 时成立。界面把参数限制在 N<sub>F</sub> ≤ 0.09；超出这个范围应使用菲涅耳衍射。</li>
+            <li><strong>标量衍射。</strong>忽略偏振与缝壁的近场耦合；缝宽远大于波长时成立。</li>
+            <li><strong>屏幕线性。</strong>条纹亮度按相对强度 I/I₀ 显示，不表示绝对辐照度；显示端做了 sRGB 编码。</li>
+            <li><strong>白光颜色。</strong>用 6500 K 黑体谱与 CIE 1931 2° 观察者计算，中央白平衡；颜色是显示近似，不是光谱仪读数。</li>
+            <li><strong>光子统计。</strong>每个探测点独立按归一化强度抽样，忽略暗计数、死时间和探测器效率。</li>
+          </ul>
+          <div class="limits-table" role="table" aria-label="参数范围与物理约束">
+            <div role="row"><span role="cell">波长 λ</span><span role="cell">400–680 nm</span></div>
+            <div role="row"><span role="cell">缝距 d</span><span role="cell">0.04–0.15 mm</span></div>
+            <div role="row"><span role="cell">缝宽 a</span><span role="cell">0.01–0.05 mm，且 a &lt; d</span></div>
+            <div role="row"><span role="cell">屏距 L</span><span role="cell">1.2–4.0 m</span></div>
+            <div role="row"><span role="cell">视场</span><span role="cell">20–120 mm</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>理想标量衍射模型 · 夫琅禾费近似 · CIE 1931 2° 观察者</p>
+    <p>所有读数由同一物理引擎实时计算；颜色仅用于显示。</p>
+  </footer>
+
+  <script src="js/physics.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

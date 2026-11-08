@@ -1,0 +1,10 @@
+{
+  "name": "double-slit-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive Young's double-slit virtual experiment with Fraunhofer diffraction, white light and single-photon accumulation.",
+  "scripts": {
+    "test": "node tests/physics.test.js",
+    "serve": "python3 -m http.server 4173"
+  }
+}
